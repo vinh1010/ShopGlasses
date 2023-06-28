@@ -1,0 +1,59 @@
+﻿@model BTL.Models.Categories
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content" style="padding-top: 20px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Cập nhật danh mục</h3>
+                    </div>
+
+                    <form action="/Admin/Categories/Edit" method="POST">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Mã danh mục</label>
+                                <input type="text" name="CategoryId" value="@Model.CategoryId" class="form-control" id="exampleInputEmail1" placeholder="Nhập mã danh mục" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Tên danh mục</label>
+                                <input type="text" name="NameCategory" value="@Model.NameCategory" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên danh mục">
+                                <b class="text-danger">@ViewBag.Name</b>
+                                <b class="text-danger">@ViewBag.CheckName</b>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Trạng thái</label>
+                                <br>
+                                <span><input type="radio" name="Status" value="true" @(Model.Status == true ? "checked" : "")>Sử dụng</span>
+                                <span><input type="radio" name="Status" value="false" @(Model.Status == false ? "checked" : "")>Không sử dụng</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Loại danh mục</label>
+                                <select class="form-control" name="ParentId">
+                                    <option value="0">-------------------- Danh mục chính --------------------</option>
+
+                                    @foreach (var cate in ViewBag.listCate)
+                                    {
+                                        <option value="@cate.CategoryId" @(Model.ParentId.Equals(cate.CategoryId)?"selected":"")>@cate.NameCategory</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Ghi thông tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+

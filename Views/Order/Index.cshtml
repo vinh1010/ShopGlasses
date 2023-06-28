@@ -1,0 +1,126 @@
+﻿@model IEnumerable<BTL.Models.Orders>
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalQunatity = 0;
+    var totalPrice = 0;
+    @foreach (var cart in ViewBag.Cart)
+    {
+        totalQunatity += cart.Quantity;
+        totalPrice += ((int)cart.Price * cart.Quantity);
+    }
+}
+
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+            <li><a asp-action="Index" asp-controller="Cart">Giỏ hàng</a></li>
+            <li class="active">Thanh toán</li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-8 col-sm-8">
+                <!-- BEGIN CHECKOUT PAGE -->
+                <div class="panel-group checkout-page accordion scrollable" id="checkout-page">
+                    <!-- BEGIN PAYMENT ADDRESS -->
+                    <div id="payment-address" class="panel panel-default">
+                        <div class="panel-body row">
+                            <div class="col-md-12 col-sm-12">
+                                <h3>Thông tin nhận hàng</h3>
+                                <form asp-action="Add" asp-controller="Order" method="POST">
+                                    <input type="hidden" name="TotalMoney" value="@totalPrice">
+                                    <input type="hidden" name="TotalQuantity" value="@totalQunatity">
+                                    <div class="form-group">
+                                        <label for="firstname">Email <span class="require">*</span></label>
+                                        @if (HttpContextAccessor.HttpContext.Session.GetString("email") != null)
+                                        {
+                                            <input type="text" name="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("email")" class="form-control">
+                                            <b class="text-danger">@TempData["Email"]</b>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" name="Email" id="firstname" class="form-control">
+                                            <b class="text-danger">@TempData["Email"]</b>
+                                        }
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Tên người nhận <span class="require">*</span></label>
+                                        @if (HttpContextAccessor.HttpContext.Session.GetString("username") != null)
+                                        {
+                                            <input type="text" name="NameCustomer" value="@HttpContextAccessor.HttpContext.Session.GetString("username")" class="form-control">
+                                            <b class="text-danger">@TempData["NameCustomer"]</b>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" name="NameCustomer" class="form-control">
+                                            <b class="text-danger">@TempData["NameCustomer"]</b>
+                                        }
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">Số điện thoại <span class="require">*</span></label>
+                                        <input type="text" name="Phone" id="telephone" class="form-control">
+                                        <b class="text-danger">@TempData["Phone"]</b>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fax">Đia chỉ</label>
+                                        <input name="Adress" type="text" class="form-control">
+                                        <b class="text-danger">@TempData["Adress"]</b>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fax">Ghi chú (tùy chọn)</label>
+                                        <textarea name="Note" class="form-control"></textarea>
+                                        <b class="text-danger">@TempData["Note"]</b>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary  pull-right collapsed" type="submit">Đặt hàng</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END CHECKOUT PAGE -->
+            </div>
+            <div class="col-md-4 col-sm-4" style="background-color: white">
+                <div class="sidebar-products clearfix">
+                    <h2>Đơn hàng (@totalQunatity sản phẩm)</h2>
+                    @foreach (var cart in ViewBag.Cart)
+                    {
+                        <div class="item">
+                            <a asp-action="Detail" asp-controller="Product" asp-route-id="@cart.IdProduct"><img src="~/products/@cart.Image" alt="@cart.NameProduct"></a>
+                            <h3><a asp-action="Detail" asp-controller="Product" asp-route-id="@cart.IdProduct">@cart.NameProduct x @cart.Quantity</a></h3>
+                            <div class="price">@(cart.Price * cart.Quantity) đ</div>
+                        </div>
+                    }
+
+                </div>
+                <div class="checkout-total-block">
+                    <ul>
+                        <li>
+                            <hr>
+                            <em>Tạm tính</em>
+                            <strong class="price">@totalPrice <span>đ</span></strong>
+                        </li>
+                        <li>
+                            <em>Phí vận chuyển</em>
+                            <strong class="price">0 <span>đ</span></strong>
+                        </li>
+                        <li class="checkout-total-price">
+                            <em>Tổng tiền</em>
+                            <strong class="price">@totalPrice <span>đ</span></strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+    </div>
+</div>
+

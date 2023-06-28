@@ -1,0 +1,93 @@
+﻿@model X.PagedList.IPagedList<BTL.Models.Orders>
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content" style="padding-top: 20px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách đơn hàng</h3>
+                        <div class="card-tools">
+                            <form action="/Admin/Orders/Index" method="GET">
+                                <div class="input-group input-group-sm" style="width: 350px;">
+                                    <input type="text" name="Search" class="form-control float-right" placeholder="Nhâp email khách hàng">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-bordered" style="margin-top: 20px">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Ghi chú</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model)
+                                {
+                                <tr>
+                                    <td>@order.OrderId</td>
+                                    <td>@order.NameCustomer</td>
+                                    <td>@order.Email</td>
+                                    <td>@order.Phone</td>
+                                    <td>@order.Adress</td>
+                                    <td>@order.Note</td>
+                                    <td>
+                                        @if (order.Status == 1)
+                                        {
+                                            <span class="badge bg-danger">Chờ xác nhận</span>
+                                        }
+                                        else if (order.Status == 2)
+                                        {
+                                            <span class="badge bg-warning">Đang vận chuyển</span>
+                                        }
+                                        else if (order.Status == 3)
+                                        {
+                                            <span class="badge bg-success">Đã thanh toán</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-info">Đã hủy</span>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                             new PagedListRenderOptions
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                }
+                            )
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

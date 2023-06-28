@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+            <li class="active">Đăng nhập</li>
+        </ul>
+        <div class="d-lg-flex half" style="width: 50%;margin-left: 25%;">
+            <div class="contents order-2 order-md-1">
+                <div class="container" style="margin-top: 100px;margin-bottom: 100px">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-7">
+                            <h3 class="text-center">Đăng nhập </h3>
+                            <form action="/Login/Login" method="post">
+                                @if (ViewBag.Erorr != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @Html.Raw(ViewBag.Erorr)
+                                    </div>
+                                }
+
+                                @if (TempData["success"] != null)
+                                {
+                                    <div class="alert alert-success" role="alert">
+                                        @Html.Raw(TempData["success"])
+                                    </div>
+                                }
+                                <div class="form-group first">
+                                    <label for="username">Email</label>
+                                    <input type="text" name="email" class="form-control" placeholder="Nhập email của bạn">
+                                </div>
+                                <div class="form-group last mb-3">
+                                    <label for="password">Mật khẩu</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu">
+                                </div>
+
+                                <div class="d-flex mb-5 align-items-center">
+                                    <label class="control control--checkbox mb-0">
+                                        <span class="caption">Nhớ mật khẩu</span>
+                                        <input type="checkbox" />
+                                    </label>
+                                </div>
+
+                                <div class="d-flex mb-5 align-items-center" style="margin-top: 10px;margin-bottom: 10px">
+                                    <label class="control control--checkbox mb-0">
+                                        <span class="caption">Bạn chưa có tài khoản: <a asp-action="register" asp-controller="Login" class="forgot-pass">Đăng ký ngay</a> </span>
+                                    </label>
+                                </div>
+
+                                <input type="submit" value="Đăng nhập" class="btn btn-block btn-primary">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

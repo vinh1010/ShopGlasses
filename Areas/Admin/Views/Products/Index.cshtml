@@ -1,0 +1,113 @@
+﻿@model X.PagedList.IPagedList<BTL.Models.Products>
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content" style="padding-top: 20px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách sản phẩm</h3>
+                        <div class="card-tools">
+                            <form action="/Admin/Products/Index" method="GET">
+                                <div class="input-group input-group-sm" style="width: 350px;">
+                                    <input type="text" name="Search" class="form-control float-right" placeholder="Nhâp tên sản phẩm">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <a class="btn btn-primary" href="/Admin/Products/Create">Thêm mới sản phẩm </a>
+                        @if (TempData["success"] != null)
+                        {
+                            <div class="alert alert-success" role="alert" style="margin-top:20px">
+                                @Html.Raw(TempData["success"])
+                            </div>
+                        }
+                        @if (TempData["eror"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="margin-top:20px">
+                                @Html.Raw(TempData["eror"])
+                            </div>
+                        }
+                        <table class="table table-bordered" style="margin-top: 20px">
+                            <thead>
+                                <tr>
+                                    <th>Mã SP</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th width="10%">Ảnh sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Giá khuyến mãi</th>
+                                    <th>Số lượng</th>
+                                    <th>Danh mục</th>
+                                    <th>Nhãn hàng</th>
+                                    <th>Chất liệu</th>
+                                    <th>Trạng thái</th>
+                                    <th style="width: 7%">Công cụ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pro in Model)
+                                {
+                                    <tr>
+                                        <td>@pro.ProductId</td>
+                                        <td>@pro.NameProduct</td>
+                                        <td><img src="~/products/@pro.Image" alt="@pro.NameProduct" width="60%"></td>
+                                        <td>@pro.Price VNĐ</td>
+                                        <td>@pro.SalePrice VNĐ</td>
+                                        <td>@pro.Quantity</td>
+                                        <td>@pro.Category.NameCategory</td>
+                                        <td>@pro.Brand.NameBrand</td>
+                                        <td>@pro.Material.NameMaterial</td>
+                                        <td>
+                                            @if ((bool)pro.Status)
+                                            {
+                                                <span class="badge bg-success">Còn hàng</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Hết hàng</span>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            <a style="color: green" href="/Admin/Products/Edit?id=@pro.ProductId" title="Sửa thông tin"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a style="color: red;padding-left: 20px" href="/Admin/Products/Delete?id=@pro.ProductId" title="Xóa bản ghi"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                             new PagedListRenderOptions
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                }
+                            )
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+

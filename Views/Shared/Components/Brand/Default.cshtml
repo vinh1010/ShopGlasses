@@ -1,0 +1,5 @@
+﻿@model IEnumerable<BTL.Models.Brands>
+
+@foreach (var brand in Model) { 
+    <a asp-action="ProductByBrand" asp-controller="Product" asp-route-id="@brand.BrandId"><img style="width: 100%" src="~/brands/@brand.Image" alt="@brand.NameBrand" title="@brand.NameBrand"></a>
+}

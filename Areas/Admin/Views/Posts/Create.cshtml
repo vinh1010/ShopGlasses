@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BTL.Models.Posts>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Scripts{
+    <script src="//cdn.ckeditor.com/4.19.1/full/ckeditor.js"></script>
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtContent');
+        })
+    </script>
+}
+
+<section class="content" style="padding-top: 20px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thêm mới bài viết</h3>
+                    </div>
+
+                    <form action="/Admin/Posts/Create" method="POST">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Tên bài viết</label>
+                                <input type="text" name="NamePost" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên bài viết">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> Nội dung</label>
+                                <textarea name="Content" id="txtContent" class="form-control">Nhập nội dung</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Trạng thái</label>
+                                <br>
+                                <input type="radio" name="Status" value="true" checked>Sử dụng
+                                <input type="radio" name="Status" value="false">Không sử dụng
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Ghi thông tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+

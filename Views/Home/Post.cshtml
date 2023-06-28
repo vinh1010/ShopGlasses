@@ -1,0 +1,19 @@
+﻿@model BTL.Models.Posts
+@{
+    ViewData["Title"] = "Post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+            <li>Góc tư vấn</li>
+            <li class="active">@Model.NamePost</li>
+        </ul>
+        <div class="row margin-bottom-40" style="margin-top: 50px">
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</div>
+

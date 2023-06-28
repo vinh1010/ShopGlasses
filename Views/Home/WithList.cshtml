@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<BTL.Models.Products>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="index" asp-controller="Home">Trang chủ</a></li>
+            <li class="active">Sản phẩm yêu thích</li>
+        </ul>
+        @if (HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+        {
+            <div style="margin: 100px 0px 100px 0px; font-size: 19px" class="text-center"><p>Vui lòng đăng nhập để xem danh sách yêu thích của bạn:<a asp-action="Login" asp-controller="Login"> Đăng nhập ngay</a></p></div>
+        }
+        else
+        {
+            <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
+            <div class="row margin-bottom-40">
+                <!-- BEGIN SALE PRODUCT -->
+                <div class="col-md-12 sale-product">
+                    <h2>New Arrivals</h2>
+                    <div class="owl-carousel owl-carousel5">
+                        @foreach (var pro in Model)
+                        {
+                            <div>
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img src="~/products/@pro.Image" class="img-responsive" alt="@pro.NameProduct">
+                                        <div>
+                                            <a asp-action="WithList" asp-controller="Home" class="btn btn-default fancybox-button" title="Yêu thích"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" title="Xem chi tiết"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <h3><a href="shop-item.html">@pro.NameProduct</a></h3>
+                                    @if (pro.SalePrice > 0)
+                                    {
+                                        <div class="pi-price"><del>@pro.Price đ</del><span style="padding-left: 20px">@pro.SalePrice đ</span></div>
+                                        <br>
+                                        <br>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="pi-price">@pro.Price đ</div>
+                                        <br>
+                                        <br>
+                                    }
+                                    <a href="javascript:;" class="btn btn-default add2cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                    <div class="sticker sticker-sale"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- END SALE PRODUCT -->
+            </div>
+            <!-- END SALE PRODUCT & NEW ARRIVALS -->
+        }
+    </div>
+</div>

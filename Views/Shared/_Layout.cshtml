@@ -1,0 +1,312 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Metronic Shop UI</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta content="Metronic Shop UI description" name="description">
+    <meta content="Metronic Shop UI keywords" name="keywords">
+    <meta content="keenthemes" name="author">
+
+    <meta property="og:site_name" content="-CUSTOMER VALUE-">
+    <meta property="og:title" content="-CUSTOMER VALUE-">
+    <meta property="og:description" content="-CUSTOMER VALUE-">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
+    <meta property="og:url" content="-CUSTOMER VALUE-">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Fonts START -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <!-- Fonts END -->
+    <!-- Global styles START -->
+    <link href="~/customer/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/customer/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Global styles END -->
+    <!-- Page level plugin styles START -->
+    <link href="~/customer/assets/pages/css/animate.css" rel="stylesheet">
+    <link href="~/customer/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+    <link href="~/customer/assets/plugins/owl.carousel/assets/owl.carousel.css" rel="stylesheet">
+    <!-- Page level plugin styles END -->
+    <!-- Theme styles START -->
+    <link href="~/customer/assets/pages/css/components.css" rel="stylesheet">
+    <link href="~/customer/assets/pages/css/slider.css" rel="stylesheet">
+    <link href="~/customer/assets/pages/css/style-shop.css" rel="stylesheet" type="text/css">
+    <link href="~/customer/assets/corporate/css/style.css" rel="stylesheet">
+    <link href="~/customer/assets/corporate/css/style-responsive.css" rel="stylesheet">
+    <link href="~/customer/assets/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
+    <link href="~/customer/assets/corporate/css/custom.css" rel="stylesheet">
+    <link href="~/login/css/style.css">
+    <style type="text/css">
+        .claimedRight {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 230px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .claimedRight1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 190px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .claimedRight2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 530px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+    </style>
+    <!-- Theme styles END -->
+</head>
+<!-- Head END -->
+<!-- Body BEGIN -->
+<body class="ecommerce">
+    <!-- BEGIN TOP BAR -->
+    <div class="pre-header">
+        <div class="container">
+            <div class="row">
+
+                @if (HttpContextAccessor.HttpContext.Session.GetString("username") != null)
+                {
+                    <div class="col-md-6 col-sm-6 additional-shop-info">
+                        <p>Xin chào: @HttpContextAccessor.HttpContext.Session.GetString("username")</p>
+                    </div>
+                    <!-- END TOP BAR LEFT PART -->
+                    <!-- BEGIN TOP BAR MENU -->
+                    <div class="col-md-6 col-sm-6 additional-nav">
+                        <ul class="list-unstyled list-inline pull-right">
+                            <li><a asp-action="Logout" asp-controller="Login">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <!-- BEGIN TOP BAR LEFT PART -->
+                    <div class="col-md-6 col-sm-6 additional-shop-info">
+                    </div>
+                    <!-- END TOP BAR LEFT PART -->
+                    <!-- BEGIN TOP BAR MENU -->
+                    <div class="col-md-6 col-sm-6 additional-nav">
+                        <ul class="list-unstyled list-inline pull-right">
+                            <li><a asp-action="Register" asp-controller="Login">Đăng ký</a></li>
+                            <li><a asp-action="Login" asp-controller="Login">Đăng nhập</a></li>
+                        </ul>
+                    </div>
+                }
+                <!-- END TOP BAR MENU -->
+            </div>
+        </div>
+    </div>
+    <!-- END TOP BAR -->
+    <!-- BEGIN HEADER -->
+    <div class="header">
+        <div class="container">
+            <a class="site-logo" asp-action="Index" asp-controller="Home"><img src="~/customer/assets/corporate/img/logos/logo-shop-red.png" alt="Metronic Shop UI"></a>
+
+            <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
+
+            @await Component.InvokeAsync("Cart")
+            <!-- BEGIN NAVIGATION -->
+            <div class="header-navigation" style="font-size: 15px">
+                <ul>
+                    <li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+                    @await Component.InvokeAsync("Category")
+                    <li class="dropdown nav-catalogue">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                            Góc tư vấn
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-action="Post" asp-route-id="1" asp-controller="Home">Hướng dẫn chọn gọng kính</a></li>
+                            <li><a asp-action="Post" asp-route-id="2" asp-controller="Home">Hướng dẫn chọn mắt kính</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- END NAVIGATION -->
+        </div>
+    </div>
+    <!-- Header END -->
+
+    <div>@RenderBody()</div>
+
+
+    <!-- BEGIN BRANDS -->
+    <div class="brands">
+        <div class="container">
+            <div class="owl-carousel owl-carousel6-brands">
+                @await Component.InvokeAsync("Brand")
+            </div>
+        </div>
+    </div>
+    <!-- END BRANDS -->
+    <!-- BEGIN STEPS -->
+    <div class="steps-block steps-block-red">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-truck"></i>
+                    <div>
+                        <h3>Miễn phí vận chuyển</h3>
+                        <em>Chuyển phát nhanh trong 3 ngày</em>
+                    </div>
+                    <span>&nbsp;</span>
+                </div>
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-gift"></i>
+                    <div>
+                        <h3>QUÀ TẶNG HÀNG NGÀY</h3>
+                        <em>3 Quà tặng hàng ngày cho khách hàng may mắn</em>
+                    </div>
+                    <span>&nbsp;</span>
+                </div>
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-phone"></i>
+                    <div>
+                        <h3>477 505 8877</h3>
+                        <em>Chăm sóc khách hàng 24/7</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END STEPS -->
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN COPYRIGHT -->
+                <div class="col-md-4 col-sm-4 padding-top-10">
+                    2015 © Keenthemes. ALL Rights Reserved.
+                </div>
+                <!-- END COPYRIGHT -->
+                <!-- BEGIN PAYMENTS -->
+                <div class="col-md-4 col-sm-4">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><img src="~/customer/assets/corporate/img/payments/western-union.jpg" alt="We accept Western Union" title="We accept Western Union"></li>
+                        <li><img src="~/customer/assets/corporate/img/payments/american-express.jpg" alt="We accept American Express" title="We accept American Express"></li>
+                        <li><img src="~/customer/assets/corporate/img/payments/MasterCard.jpg" alt="We accept MasterCard" title="We accept MasterCard"></li>
+                        <li><img src="~/customer/assets/corporate/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
+                        <li><img src="~/customer/assets/corporate/img/payments/visa.jpg" alt="We accept Visa" title="We accept Visa"></li>
+                    </ul>
+                </div>
+                <!-- END PAYMENTS -->
+                <!-- BEGIN POWERED -->
+                <div class="col-md-4 col-sm-4 text-right">
+                    <p class="powered">Powered by: <a href="http://www.keenthemes.com/">Nguyễn Đức Vinh</a></p>
+                </div>
+                <!-- END POWERED -->
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN fast view of a product -->
+    <div id="product-pop-up" style="display: none; width: 700px;">
+        <div class="product-page product-pop-up">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-3">
+                    <div class="product-main-image">
+                        <img src="~/customer/assets/pages/img/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                    </div>
+                    <div class="product-other-images">
+                        <a href="javascript:;" class="active"><img alt="Berry Lace Dress" src="~/customer/assets/pages/img/products/model3.jpg"></a>
+                        <a href="javascript:;"><img alt="Berry Lace Dress" src="~/customer/assets/pages/img/products/model4.jpg"></a>
+                        <a href="javascript:;"><img alt="Berry Lace Dress" src="~/customer/assets/pages/img/products/model5.jpg"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-9">
+                    <h2>Cool green dress with red bell</h2>
+                    <div class="price-availability-block clearfix">
+                        <div class="price">
+                            <strong><span>$</span>47.00</strong>
+                            <em>$<span>62.00</span></em>
+                        </div>
+                        <div class="availability">
+                            Availability: <strong>In Stock</strong>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
+                    </div>
+                    <div class="product-page-options">
+                        <div class="pull-left">
+                            <label class="control-label">Size:</label>
+                            <select class="form-control input-sm">
+                                <option>L</option>
+                                <option>M</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <div class="pull-left">
+                            <label class="control-label">Color:</label>
+                            <select class="form-control input-sm">
+                                <option>Red</option>
+                                <option>Blue</option>
+                                <option>Black</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="product-page-cart">
+                        <div class="product-quantity">
+                            <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Add to cart</button>
+                        <a href="shop-item.html" class="btn btn-default">More details</a>
+                    </div>
+                </div>
+
+                <div class="sticker sticker-sale"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END fast view of a product -->
+    <!-- Load javascripts at bottom, this will reduce page load time -->
+    <!-- BEGIN CORE PLUGINS (REQUIRED FOR ALL PAGES) -->
+    <!--[if lt IE 9]>
+    <script src="~/customer/assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/customer/assets/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/customer/assets/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <script src="~/customer/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/customer/assets/corporate/scripts/back-to-top.js" type="text/javascript"></script>
+    <script src="~/customer/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+    <script src="~/customer/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
+    <script src="~/customer/assets/plugins/owl.carousel/owl.carousel.min.js" type="text/javascript"></script><!-- slider for products -->
+    <script src='~/customer/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
+    <script src="~/customer/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+
+    <script src="~/customer/assets/corporate/scripts/layout.js" type="text/javascript"></script>
+    <script src="~/customer/assets/pages/scripts/bs-carousel.js" type="text/javascript"></script>
+    <script src="~/login/js/main.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+        });
+    </script>
+    <!-- END PAGE LEVEL JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

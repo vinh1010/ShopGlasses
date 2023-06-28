@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BTL.Models.Cart>
+@{ 
+    var item = 0;
+    var totalPrice = 0;
+    foreach(var cart in Model)
+    {
+        item += cart.Quantity;
+        totalPrice += ((int)cart.Price * cart.Quantity);
+    }
+}
+
+<!-- BEGIN CART -->
+<div class="top-cart-block">
+    <div class="top-cart-info">
+        <a asp-controller="Cart" asp-action="Index" class="top-cart-info-count">@item SP</a>
+        <a asp-controller="Cart" asp-action="Index" class="top-cart-info-value">@totalPrice đ</a>
+    </div>
+    <i class="fa fa-shopping-cart"></i>
+
+    <div class="top-cart-content-wrapper">
+        <div class="top-cart-content">
+            <ul class="scroller" style="height: 250px;">
+                @foreach (var cart in Model)
+                {
+                    
+                    <li>
+                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@cart.IdProduct"><img src="~/products/@cart.Image" alt="@cart.NameProduct" width="37" height="34"></a>
+                        <span class="cart-content-count">x @cart.Quantity</span>
+                        <strong><a asp-controller="Product" asp-action="Detail" asp-route-id="@cart.IdProduct">@cart.NameProduct</a></strong>
+                        <em>@(cart.Price * cart.Quantity) đ</em>
+                        <a asp-action="Delete" asp-controller="Cart" asp-route-id="@cart.IdProduct" class="del-goods">&nbsp;</a>
+                    </li>
+                }
+            </ul>
+            <div class="text-right">
+                <a asp-action="Index" asp-controller="Cart" class="btn btn-default">Xem giỏ hàng</a>
+                <a asp-action="Index" asp-controller="Order" class="btn btn-primary">Thanh toán</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END CART -->

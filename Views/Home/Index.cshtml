@@ -1,0 +1,184 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<BTL.Models.Products>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- BEGIN SLIDER -->
+<div class="page-slider margin-bottom-35">
+    <div id="carousel-example-generic" class="carousel slide carousel-slider">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <!-- First slide -->
+            <div class="item carousel-item-four active">
+                <div class="container">
+                    <div class="carousel-position-four text-center">
+                        <h3 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase" data-animation="animated fadeInDown">
+                            <br><span class="color-red-v2">Lần cuối bạn khám mắt là khi nào?</span>
+                        </h3>
+                        <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">
+                            Hãy đến khám mắt miễn phí tại HIBOU OPTICAL Nhé !
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third slide -->
+            <div class="item carousel-item-six">
+                <div class="container">
+                    <div class="carousel-position-four text-center">
+                        <br>
+                        <span class="carousel-subtitle-v3 margin-bottom-15" data-animation="animated fadeInDown">
+                            Tròng kính chống ánh sáng xanh hàng đầu từ
+                        </span>
+                        <p class="carousel-subtitle-v4" data-animation="animated fadeInDown">
+                            ESSILOR, CHEMI, HOYA
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fourth slide -->
+            <div class="item carousel-item-seven">
+                <div class="center-block">
+                    <div class="center-block-wrap">
+                        <div class="center-block-body">
+                            <h3 class="carousel-title-v1 margin-bottom-20" data-animation="animated fadeInDown">
+                                Bộ sưu tập mới
+                            </h3>
+                            <a class="carousel-btn" asp-action="ProductByCate" asp-controller="Product" asp-route-id="">Mua ngay!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control carousel-control-shop" href="#carousel-example-generic" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </a>
+        <a class="right carousel-control carousel-control-shop" href="#carousel-example-generic" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+<!-- END SLIDER -->
+
+<div class="main">
+    <div class="container">
+        <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SALE PRODUCT -->
+            <div class="col-md-12 sale-product">
+                <h2>Sản phẩm mới</h2>
+                <div class="owl-carousel owl-carousel5">
+                    @foreach (var pro in Model)
+                    {
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="~/products/@pro.Image" class="img-responsive" alt="@pro.NameProduct">
+                                    <div>
+                                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Thêm vào giỏ"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                        <a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Xem chi tiết"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                                <h3><a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId"><span class="claimedRight1">@pro.NameProduct</span>...</a></h3>
+                                @if (pro.SalePrice > 0)
+                                {
+                                    <div class="pi-price"><del>@pro.Price đ</del><span style="padding-left: 20px">@pro.SalePrice đ</span></div>
+                                    <br>
+                                    <br>
+
+                                }
+                                else
+                                {
+                                    <div class="pi-price">@pro.Price đ</div>
+                                    <br>
+                                    <br>
+                                }
+                                <div class="sticker sticker-new"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- END SALE PRODUCT -->
+        </div>
+        <!-- END SALE PRODUCT & NEW ARRIVALS -->
+        <!-- BEGIN TWO PRODUCTS & PROMO -->
+        <div class="row margin-bottom-35 ">
+            <!-- BEGIN TWO PRODUCTS -->
+            <div class="col-md-6 two-items-bottom-items">
+                <h2>Sản phẩm khuyến mãi</h2>
+                <div class="owl-carousel owl-carousel2">
+                    @foreach (var pro in ViewBag.ListProSale)
+                    {
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="~/products/@pro.Image" class="img-responsive" alt="@pro.NameProduct">
+                                    <div>
+                                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Thêm vào giỏ"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                        <a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Xem chi tiết"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                                <h3><a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId"><span class="claimedRight">@pro.NameProduct</span>...</a></h3>
+                                @if (pro.SalePrice > 0)
+                                {
+                                    <div class="pi-price"><del>@pro.Price đ</del><span style="padding-left: 20px">@pro.SalePrice đ</span></div>
+                                    <br>
+                                    <br>
+
+                                }
+                                else
+                                {
+                                    <div class="pi-price">@pro.Price đ</div>
+                                    <br>
+                                    <br>
+                                }
+                                <div class="sticker sticker-sale"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- END TWO PRODUCTS -->
+            <!-- BEGIN PROMO -->
+            <div class="col-md-6 shop-index-carousel">
+                <div class="content-slider">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="~/customer/assets/pages/img/index-sliders/slide1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <div class="item">
+                                <img src="~/customer/assets/pages/img/index-sliders/slide2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <div class="item">
+                                <img src="~/customer/assets/pages/img/index-sliders/slide3.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROMO -->
+        </div>
+        <!-- END TWO PRODUCTS & PROMO -->
+    </div>
+</div>

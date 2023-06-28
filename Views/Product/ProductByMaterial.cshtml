@@ -1,0 +1,188 @@
+﻿@model X.PagedList.IPagedList<BTL.Models.Products>
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "ProductByMaterial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+            <li><a href="">Sản phẩm</a></li>
+            @if (ViewBag.NameMaterial != null)
+            {
+                <li class="active">@Html.Raw(ViewBag.NameMaterial)</li>
+            }
+            else
+            {
+                <li class="active">Tất cả sản phẩm</li>
+            }
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix"><a asp-action="ProductByCate" asp-controller="Product" asp-route-id=""><i class="fa fa-angle-right"></i> Tất cả sản phẩm</a></li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a>
+                            <i class="fa fa-angle-right"></i>
+                            Gọng kính cận
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (var cate1 in ViewBag.listCate1)
+                            {
+                                <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate1.CategoryId"> @cate1.NameCategory</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a>
+                            <i class="fa fa-angle-right"></i>
+                            Gọng kính râm
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (var cate2 in ViewBag.listCate2)
+                            {
+                                <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate2.CategoryId"> @cate2.NameCategory</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a>
+                            <i class="fa fa-angle-right"></i>
+                            Mắt kính
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (var cate3 in ViewBag.listCate3)
+                            {
+                                <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate3.CategoryId"> @cate3.NameCategory</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="sidebar-filter margin-bottom-25">
+                    <h2>Nhãn hàng</h2>
+                    <ul class="dropdown-menu" style="display: block; padding: 10px 0px 10px 0px">
+                        @foreach (var brand in ViewBag.brand)
+                        {
+                            <li><a asp-action="ProductByBrand" asp-controller="Product" asp-route-id="@brand.BrandId"><i class="fa fa-angle-right"></i> @brand.NameBrand</a></li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="sidebar-filter margin-bottom-25">
+                    <h2>Chất liệu</h2>
+                    <ul class="dropdown-menu" style="display: block; padding: 10px 0px 10px 0px">
+                        @foreach (var material in ViewBag.material)
+                        {
+                            <li><a asp-action="ProductByMaterial" asp-controller="Product" asp-route-id="@material.MaterialId"><i class="fa fa-angle-right"></i> @material.NameMaterial</a></li>
+                        }
+                    </ul>
+                </div>
+
+                @*<div class="sidebar-filter margin-bottom-25">
+                        <h2>Filter</h2>
+                        <h3>Availability</h3>
+                        <div class="checkbox-list">
+                            <label><div class="checker"><span><input type="checkbox"></span></div> Not Available (3)</label>
+                            <label><div class="checker"><span><input type="checkbox"></span></div> In Stock (26)</label>
+                        </div>
+
+                        div
+                    </div>*@
+
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-7">
+                <div class="row list-view-sorting clearfix">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav class="navbar navbar-light bg-light pull-right">
+                                    <form class="form-inline" asp-action="ProductByMaterial" asp-controller="Product" method="GET">
+                                        <input class="form-control" style="width: 350px;" type="search" placeholder="Nhập tên sản phẩm" name="Search" aria-label="Search">
+                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </form>
+                                </nav>
+                            </div>
+                            @*<div class="pull-right">
+                    <label class="control-label">Sort&nbsp;By:</label>
+                    <select class="form-control input-sm">
+                        <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
+                        <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
+                        <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
+                        <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
+                        <option value="#?sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
+                        <option value="#?sort=rating&amp;order=DESC">Rating (Highest)</option>
+                        <option value="#?sort=rating&amp;order=ASC">Rating (Lowest)</option>
+                        <option value="#?sort=p.model&amp;order=ASC">Model (A - Z)</option>
+                        <option value="#?sort=p.model&amp;order=DESC">Model (Z - A)</option>
+                    </select>
+                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <!-- BEGIN PRODUCT LIST -->
+                <div class="row product-list">
+                    @foreach (var pro in Model)
+                    {
+                        <!-- PRODUCT ITEM START -->
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="~/products/@pro.Image" class="img-responsive" alt="@pro.NameProduct">
+                                    <div>
+                                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Thêm vào giỏ"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                        <a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId" class="btn btn-default fancybox-fast-view" title="Xem chi tiết"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                                <h3><a asp-action="Detail" asp-controller="Product" asp-route-id="@pro.ProductId"><span class="claimedRight">@pro.NameProduct</span>...</a></h3>
+                                @if (pro.SalePrice > 0)
+                                {
+                                    <div class="pi-price"><del>@pro.Price đ</del><span style="padding-left: 20px">@pro.SalePrice đ</span></div>
+                                    <br>
+                                    <br>
+
+                                }
+                                else
+                                {
+                                    <div class="pi-price">@pro.Price đ</div>
+                                    <br>
+                                    <br>
+                                }
+                            </div>
+                        </div>
+                        <!-- PRODUCT ITEM END -->
+                    }
+                </div>
+                <!-- END PRODUCT LIST -->
+                <!-- BEGIN PAGINATOR -->
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <ul class="pagination pull-right">
+                            @Html.PagedListPager(Model, page => Url.Action("ProductByMaterial", new { page = page }),
+                             new PagedListRenderOptions
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                }
+                            )
+                        </ul>
+                    </div>
+                </div>
+                <!-- END PAGINATOR -->
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+    </div>
+</div>
+

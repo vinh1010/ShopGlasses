@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BTL.Models.Categories>
+
+<li class="dropdown nav-catalogue">
+    <a class="dropdown-toggle">
+        Gọng kính cận
+
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var cate in Model)
+        {
+            <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate.CategoryId">@cate.NameCategory</a></li>
+        }
+    </ul>
+</li>
+<li class="dropdown dropdown-megamenu">
+    <a class="dropdown-toggle">
+        Gọng kính râm
+
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var cate2 in ViewBag.listCate2)
+        {
+            <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate2.CategoryId">@cate2.NameCategory</a></li>
+        }
+    </ul>
+</li>
+<li class="dropdown nav-catalogue">
+    <a class="dropdown-toggle">
+        Mắt kính
+
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var cate3 in ViewBag.listCate3)
+        {
+            <li><a asp-action="ProductByCate" asp-controller="Product" asp-route-id="@cate3.CategoryId">@cate3.NameCategory</a></li>
+        }
+    </ul>
+</li>
